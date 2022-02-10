@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { PokemonContext, PokemonProvider } from './context/PokemonContext';
 
 function App() {
+  const pokemonContext = useContext(PokemonContext);
+
   return (
-    <div className="App">
-      Hello Word!
-    </div>
+    <PokemonProvider>
+      <div className="App">
+        Hello Word!
+      </div>
+    </PokemonProvider>
   );
 }
 
