@@ -1,16 +1,20 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Pokemon } from "../types/Pokemon";
 import axios from 'axios';
 
 interface PokemonInterface {
     pokemons: Pokemon[];
+    favorites: Pokemon[];
     isFavorite: boolean;
+    search: (input: string) => void;
     setFavorite: (pokemon: Pokemon) => void;
 }
 
 const defaultPokemonContext: PokemonInterface = {
     pokemons: [],
+    favorites: [],
     isFavorite: false,
+    search: () => null,
     setFavorite: () => null,
 }
 
@@ -18,6 +22,7 @@ export const PokemonContext = createContext<PokemonInterface>(defaultPokemonCont
 
 export const PokemonProvider: React.FC = ({ children }) => {
     const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+    const [favorites, setFavorites] = useState<Pokemon[]>([]);
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
     function removeRepeated(pokemons: Pokemon[]): Pokemon[] {
@@ -34,7 +39,17 @@ export const PokemonProvider: React.FC = ({ children }) => {
         return listPokemons;
     }
 
-    function setFavorite(pokemon: Pokemon): void { }
+    function search(input: string): void {
+        let listPokemons = pokemons.filter(pokemon => {
+            return pokemon.name.toLowerCase().includes(input.toLowerCase()) ||
+                pokemon.national_number.toLowerCase().includes(input.toLowerCase());
+        });
+
+        setPokemons(listPokemons);
+    }
+
+    function setFavorite(pokemon: Pokemon): void {
+    }
 
     useEffect(() => {
         async function getPokemons() {
@@ -61,7 +76,9 @@ export const PokemonProvider: React.FC = ({ children }) => {
         <PokemonContext.Provider 
             value={{
                 pokemons,
+                favorites,
                 isFavorite,
+                search,
                 setFavorite
             }}
         >

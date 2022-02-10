@@ -6,7 +6,7 @@ export type Pokemon = {
     }
     hp: number;
     name: string;
-    national_number: number;
+    national_number: string;
     sp_atk: number;
     sp_def: number;
     speed: number;

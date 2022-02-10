@@ -8,7 +8,6 @@ function App() {
   return (
     <PokemonProvider>
       <div className="App">
-        Hello Word!
         <Card />
       </div>
     </PokemonProvider>
