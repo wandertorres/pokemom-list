@@ -17,4 +17,5 @@ export type Pokemon = {
     }
     total: number;
     type: string[];
+    favorite: boolean;
 }
