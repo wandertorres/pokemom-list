@@ -5,16 +5,20 @@ import axios from 'axios';
 interface PokemonInterface {
     pokemons: Pokemon[];
     favorites: Pokemon[];
+    pokemonsTemp: Pokemon[];
     isFavorite: boolean;
     search: (input: string) => void;
+    clearSearch: () => void;
     setFavorite: (pokemon: Pokemon) => void;
 }
 
 const defaultPokemonContext: PokemonInterface = {
     pokemons: [],
     favorites: [],
+    pokemonsTemp: [],
     isFavorite: false,
     search: () => null,
+    clearSearch: () => null,
     setFavorite: () => null,
 }
 
@@ -23,6 +27,7 @@ export const PokemonContext = createContext<PokemonInterface>(defaultPokemonCont
 export const PokemonProvider: React.FC = ({ children }) => {
     const [pokemons, setPokemons] = useState<Pokemon[]>([]);
     const [favorites, setFavorites] = useState<Pokemon[]>([]);
+    const [pokemonsTemp, setPokemonsTemp] = useState<Pokemon[]>([]);
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
     function removeRepeated(pokemons: Pokemon[]): Pokemon[] {
@@ -45,7 +50,11 @@ export const PokemonProvider: React.FC = ({ children }) => {
                 pokemon.national_number.toLowerCase().includes(input.toLowerCase());
         });
 
-        setPokemons(listPokemons);
+        setPokemonsTemp(listPokemons);
+    }
+
+    function clearSearch(): void {
+        setPokemonsTemp(pokemons);
     }
 
     function setFavorite(pokemon: Pokemon): void {
@@ -64,6 +73,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
                 });
 
                 setPokemons(listPokemons);
+                setPokemonsTemp(listPokemons);
             } catch (error) {
                 console.log(`Erro ao buscar lista de pokemons (${error})`)
             }
@@ -77,8 +87,10 @@ export const PokemonProvider: React.FC = ({ children }) => {
             value={{
                 pokemons,
                 favorites,
+                pokemonsTemp,
                 isFavorite,
                 search,
+                clearSearch,
                 setFavorite
             }}
         >
