@@ -1,17 +1,14 @@
-import React, { useContext } from 'react';
-import { Card } from './components/Card';
-import { PokemonContext, PokemonProvider } from './context/PokemonContext';
+import { Cards } from './components/Cards';
+import { PokemonProvider } from './context/PokemonContext';
 
 function App() {
-  const { pokemons } = useContext(PokemonContext);
-
-  return (
-    <PokemonProvider>
-      <div className="App">
-        <Card />
-      </div>
-    </PokemonProvider>
-  );
+    return (
+        <PokemonProvider>
+            <div className="App">
+              <Cards />
+            </div>
+        </PokemonProvider>
+    );
 }
 
 export default App;
