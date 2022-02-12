@@ -1,4 +1,6 @@
-.container {
+@import "../../App.scss";
+
+.card {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
@@ -6,7 +8,7 @@
     height: 70vh;
     overflow-y: auto;
 
-    .container__card {
+    .card__container {
         margin-bottom: 1.5rem;
 
         @media (max-width: 1024px) {
@@ -71,14 +73,14 @@
             color: var(--font);
         }
     
-        .info__type{
+        .card__type{
             margin-top: 1rem;
             
             span {
                 padding: 8px;
                 margin-right: 10px;
                 border-radius: 12px;
-                color: white;
+                color: green;
             }
         }
     }

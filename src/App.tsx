@@ -1,12 +1,14 @@
 import { Cards } from './components/Cards';
+import { Filters } from './components/Filters';
 import { PokemonProvider } from './context/PokemonContext';
 
 function App() {
     return (
         <PokemonProvider>
-            <div className="App">
-              <Cards />
-            </div>
+            <main>
+                <Filters />
+                <Cards />
+            </main>
         </PokemonProvider>
     );
 }
