@@ -2,14 +2,14 @@
 
 Projeto utilizado para consumir uma API de pokemons e lista-los, exibindo suas informações, além de permitir realizar buscas e filtros.  
 
-### Funcionalidades implementadas
+## Funcionalidades implementadas
  - Listagem geral de pokemons
  - Favoritar pokemons
  - Listagem por pokemons favoritos e/ou por tipo
  - Busca de pokemons por nome ou número
  - Ordenação de pokemons por nome (crescente e decrescente) e número (crescente e decrescente)
 
-### Tecnologias, padrões e bibliotecas utilizadas
+## Tecnologias, padrões e bibliotecas utilizadas
  - React
  - TypeScript
  - Context API
@@ -17,7 +17,7 @@ Projeto utilizado para consumir uma API de pokemons e lista-los, exibindo suas i
  - Sass
  - BEM
 
-### Instruções para execução localmente
+## Instruções para execução localmente
 
 É preciso ter as ferramentas [Git](https://git-scm.com) e [Node](https://nodejs.org/en/) instalados em sua máquina.
 
@@ -41,6 +41,6 @@ npm install
 npm start
 ```
 
-### Deply do projeto no Heroku
+## Deply do projeto no Heroku
 
 https://desafio-pokedex-react.herokuapp.com/
