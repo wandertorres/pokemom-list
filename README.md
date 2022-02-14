@@ -1,5 +1,7 @@
 # Pokedex
 
+<img src="./.github/pokedex.png" />
+
 Projeto utilizado para consumir uma API de pokemons e lista-los, exibindo suas informações, além de permitir realizar buscas e filtros.  
 
 ## Funcionalidades implementadas
@@ -16,6 +18,8 @@ Projeto utilizado para consumir uma API de pokemons e lista-los, exibindo suas i
  - axios
  - Sass
  - BEM
+ - FontAwesomeIcon
+ - Layout Responsivo
 
 ## Instruções para execução localmente
 
