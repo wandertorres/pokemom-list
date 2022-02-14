@@ -8,6 +8,14 @@
     height: 70vh;
     overflow-y: auto;
     
+    &::-webkit-scrollbar {
+        width: 20px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--red); 
+        border-radius: 10px;
+    }
 
     .card__container {
         margin-bottom: 1.5rem;
