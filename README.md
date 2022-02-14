@@ -23,22 +23,22 @@ Projeto utilizado para consumir uma API de pokemons e lista-los, exibindo suas i
 
 ```bash
 # Clonar o repositório
-$ git clone https://github.com/wandertorres/pokemom-list
+git clone https://github.com/wandertorres/pokemom-list
 ```
 
 ```bash
 # Entrar na pasta do projeto
-$ cd pokemon-list
+cd pokemon-list
 ```
 
 ```bash
 # Instalar dependências
-$ npm install
+npm install
 ```
 
 ```bash
 # Executar o projeto
-$ npm start
+npm start
 ```
 
 ### Deply do projeto no Heroku
