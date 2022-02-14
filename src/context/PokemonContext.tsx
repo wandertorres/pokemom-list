@@ -8,6 +8,7 @@ interface PokemonInterface {
     types: string[];
     search: (input: string) => void;
     clearSearch: () => void;
+    order: (order: string) => void;
     filter: (filter: {type: string, favorite: boolean}) => void;
     setFavorite: (id: string) => void;
 }
@@ -18,6 +19,7 @@ const defaultPokemonContext: PokemonInterface = {
     types: [],
     search: () => null,
     clearSearch: () => null,
+    order: () => null,
     filter: () => null,
     setFavorite: () => null,
 }
@@ -40,6 +42,30 @@ export const PokemonProvider: React.FC = ({ children }) => {
 
     function clearSearch(): void {
         setPokemonsToRender(pokemons);
+    }
+
+    function order(value: string) {
+        let listPokemons: Pokemon[] = [];
+
+        if(value === "1") {
+            listPokemons = pokemonsToRender.sort((a, b) => {
+                return a.name > b.name ? 1 : a.name < b.name ? -1 : 0;
+            });
+        } else if(value === "2") {
+            listPokemons = pokemonsToRender.sort((a, b) => {
+                return a.name < b.name ? 1 : a.name > b.name ? -1 : 0;
+            });
+        } else if(value === "3") {
+            listPokemons = pokemonsToRender.sort((a, b) => {
+                return a.national_number > b.national_number ? 1 : a.national_number < b.national_number ? -1 : 0;
+            });
+        } else {
+            listPokemons = pokemonsToRender.sort((a, b) => {
+                return a.national_number < b.national_number ? 1 : a.national_number > b.national_number ? -1 : 0;
+            });
+        }
+        
+        setPokemonsToRender([...listPokemons]);
     }
 
     function filter(filter: {type: string, favorite: boolean}): void {
@@ -115,6 +141,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
                 types,
                 search,
                 clearSearch,
+                order,
                 filter,
                 setFavorite
             }}
