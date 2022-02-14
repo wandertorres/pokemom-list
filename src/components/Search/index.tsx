@@ -5,8 +5,8 @@ import { PokemonContext } from "../../context/PokemonContext";
 import { Pokemon } from "../../types/Pokemon";
 import "./styles.scss";
 
-export const Search = () => {
-    const {pokemons, pokemonsToRender, setPokemonsToRender} = useContext(PokemonContext);
+export function Search() {
+    const {pokemons, pokemonsToRender, setPokemonsToRender, setFilters} = useContext(PokemonContext);
     const [searchValue, setSearchValue] = useState<string>("");
 
      const order = (value: string): void => {
@@ -35,6 +35,7 @@ export const Search = () => {
 
      const clearSearch = (): void => {
         setPokemonsToRender(pokemons);
+        setFilters({type: "", favorite: false});
         setSearchValue("");
     }
 
@@ -52,7 +53,9 @@ export const Search = () => {
             alert("Digite algo para pesquisar!");
             return;
         }
+        
         search(searchValue);
+        setSearchValue("");
      }
 
     return(

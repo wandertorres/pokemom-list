@@ -6,8 +6,9 @@ interface PokemonInterface {
     pokemons: Pokemon[],
     pokemonsToRender: Pokemon[];
     types: string[];
+    filters: {type: string, favorite: boolean};
     setPokemonsToRender: React.Dispatch<SetStateAction<Pokemon[]>>
-    filter: (filter: {type: string, favorite: boolean}) => void;
+    setFilters: React.Dispatch<SetStateAction<{type: string, favorite: boolean}>>
     setFavorite: (id: string) => void;
 }
 
@@ -15,45 +16,33 @@ const defaultPokemonContext: PokemonInterface = {
     pokemons: [],
     pokemonsToRender: [],
     types: [],
+    filters: {type: "", favorite: false},
     setPokemonsToRender: () => null,
-    filter: () => null,
+    setFilters: () => null,
     setFavorite: () => null,
 }
 
 export const PokemonContext = createContext<PokemonInterface>(defaultPokemonContext);
 
 export const PokemonProvider: React.FC = ({ children }) => {
-    const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-    const [pokemonsToRender, setPokemonsToRender] = useState<Pokemon[]>([]);
-    const [types, setTypes] = useState<string[]>([]);
+    const [pokemons, setPokemons] = useState(defaultPokemonContext.pokemons);
+    const [pokemonsToRender, setPokemonsToRender] = useState(defaultPokemonContext.pokemonsToRender);
+    const [types, setTypes] = useState(defaultPokemonContext.types);
+    const [filters, setFilters] = useState(defaultPokemonContext.filters);
 
-    function filter(filter: {type: string, favorite: boolean}): void {
-        console.log(filter)
-        let listPokemons: Pokemon[] = pokemons;
-        
-        if(filter.favorite)
-            listPokemons = listPokemons.filter(pokemon => pokemon.favorite);
-        
-        if(filter.type !== "")
-            listPokemons = listPokemons.filter(pokemon => pokemon.type.includes(filter.type))
-
-        setPokemonsToRender(listPokemons);
-    }
-
-    function setFavorite(id: string): void {
+    const setFavorite = (id: string): void => {
         const listPokemons = pokemonsToRender;
 
-        listPokemons.map((pokemon) => {
+        listPokemons.forEach((pokemon) => {
             if(pokemon.national_number === id) {
                 pokemon.favorite = !pokemon.favorite;
             }
-            return 0;
         });
 
         setPokemonsToRender([...listPokemons]);
     }
 
-    function defineTypes(pokemons: Pokemon[]): void{
+    const defineTypes = (pokemons: Pokemon[]): void => {
         let types: string[] = [];
 
         pokemons.map((pokemon) => {
@@ -65,14 +54,14 @@ export const PokemonProvider: React.FC = ({ children }) => {
         setTypes(Array.from(new Set(types)));
     }
 
-    function removeEvolution(pokemons: Pokemon[]): Pokemon[] {
+    const removeEvolution = (pokemons: Pokemon[]): Pokemon[] => {
         return pokemons.filter((pokemon) =>
             pokemon.evolution === null
         );
     }
 
     useEffect(() => {
-        function configure(pokemons: Pokemon[]) {
+        const configure = (pokemons: Pokemon[]) => {
             const listPokemons = removeEvolution(pokemons);
     
             defineTypes(listPokemons);
@@ -100,8 +89,9 @@ export const PokemonProvider: React.FC = ({ children }) => {
                 pokemons,
                 pokemonsToRender,
                 types,
+                filters,
                 setPokemonsToRender,
-                filter,
+                setFilters,
                 setFavorite
             }}
         >
