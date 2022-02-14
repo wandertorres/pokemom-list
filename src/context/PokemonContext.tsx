@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, SetStateAction, useEffect, useState } from "react";
 import { Pokemon } from "../types/Pokemon";
 import axios from 'axios';
 
@@ -6,7 +6,7 @@ interface PokemonInterface {
     pokemons: Pokemon[],
     pokemonsToRender: Pokemon[];
     types: string[];
-    search: (input: string) => void;
+    setPokemonsToRender: React.Dispatch<SetStateAction<Pokemon[]>>
     clearSearch: () => void;
     order: (order: string) => void;
     filter: (filter: {type: string, favorite: boolean}) => void;
@@ -17,7 +17,7 @@ const defaultPokemonContext: PokemonInterface = {
     pokemons: [],
     pokemonsToRender: [],
     types: [],
-    search: () => null,
+    setPokemonsToRender: () => null,
     clearSearch: () => null,
     order: () => null,
     filter: () => null,
@@ -30,15 +30,6 @@ export const PokemonProvider: React.FC = ({ children }) => {
     const [pokemons, setPokemons] = useState<Pokemon[]>([]);
     const [pokemonsToRender, setPokemonsToRender] = useState<Pokemon[]>([]);
     const [types, setTypes] = useState<string[]>([]);
-
-    function search(input: string): void {
-        const listPokemons: Pokemon[] = pokemons.filter(pokemon => {
-            return pokemon.name.toLowerCase().includes(input.toLowerCase()) ||
-                pokemon.national_number.toLowerCase().includes(input.toLowerCase());
-        });
-
-        setPokemonsToRender([...listPokemons]);
-    }
 
     function clearSearch(): void {
         setPokemonsToRender(pokemons);
@@ -141,7 +132,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
                 pokemons,
                 pokemonsToRender,
                 types,
-                search,
+                setPokemonsToRender,
                 clearSearch,
                 order,
                 filter,

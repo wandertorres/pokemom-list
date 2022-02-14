@@ -93,4 +93,23 @@
             }
         }
     }
+
+    @media (max-width: 1200px) {
+        padding: 1rem;
+        width: 16%;
+    }
+
+    @media (max-width: 1024px) {
+        padding: 1rem;
+        width: 21%;
+    }
+    
+    @media (max-width: 768px) {
+        width: 100%;
+        max-width: 700px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 }

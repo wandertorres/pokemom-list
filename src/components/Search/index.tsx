@@ -2,12 +2,15 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
 import { PokemonContext } from "../../context/PokemonContext";
+import { Pokemon } from "../../types/Pokemon";
 import "./styles.scss";
 
 export const Search = () => {
     const {
+        pokemons,
+        pokemonsToRender,
         order,
-        search,
+        setPokemonsToRender,
         clearSearch
      } = useContext(PokemonContext);
      const [searchValue, setSearchValue] = useState<string>("");
@@ -18,8 +21,16 @@ export const Search = () => {
             return;
         }
         search(searchValue);
-        setSearchValue("");
      }
+
+     function search(input: string): void {
+        const listPokemons: Pokemon[] = pokemons.filter(pokemon => {
+            return pokemon.name.toLowerCase().includes(input.toLowerCase()) ||
+                pokemon.national_number.toLowerCase().includes(input.toLowerCase());
+        });
+
+        setPokemonsToRender(listPokemons);
+    }
 
     return(
         <section className = "search-order">

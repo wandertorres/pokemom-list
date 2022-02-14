@@ -10,17 +10,15 @@ function App() {
         <PokemonProvider>
             <header>
                 <div className = "header__container">
-                    <div className = "header__icon">
-                        <img alt="pokedex logo"/>
+                    <div className = "header__title">
                         <h1>Pokedex</h1>
                     </div>
                     <div className = "header__exit">
-                        <img alt="synvia logo"/>
                         <FontAwesomeIcon 
-                            icon={faSignOutAlt} 
-                            size="2x" 
-                            cursor="pointer"
-                            color="#FFF"          
+                            icon = {faSignOutAlt} 
+                            size = "2x" 
+                            cursor = "pointer"
+                            color = "#FFF"          
                         />
                     </div>
                 </div>
