@@ -4,9 +4,7 @@ import "./styles.scss";
 
 export const Filters = () => {
     const {
-        search,
         filter,
-        clearSearch,
         types,
     } = useContext(PokemonContext);
     const [filters, setFilters] = useState<{
@@ -48,10 +46,7 @@ export const Filters = () => {
                         changeFilter();
                     }}></span>
                 </label>
-            </div>
-
-            <button onClick = {() => search("bul")}>Busque</button>
-            <button onClick = {() => clearSearch()}>Limpar</button>    
+            </div>   
         </aside>
     );
 }

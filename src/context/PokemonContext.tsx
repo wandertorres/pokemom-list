@@ -32,7 +32,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
     const [types, setTypes] = useState<string[]>([]);
 
     function search(input: string): void {
-        const listPokemons: Pokemon[] = pokemonsToRender.filter(pokemon => {
+        const listPokemons: Pokemon[] = pokemons.filter(pokemon => {
             return pokemon.name.toLowerCase().includes(input.toLowerCase()) ||
                 pokemon.national_number.toLowerCase().includes(input.toLowerCase());
         });
@@ -44,7 +44,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
         setPokemonsToRender(pokemons);
     }
 
-    function order(value: string) {
+    function order(value: string): void {
         let listPokemons: Pokemon[] = [];
 
         if(value === "1") {
@@ -64,7 +64,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
                 return a.national_number < b.national_number ? 1 : a.national_number > b.national_number ? -1 : 0;
             });
         }
-        
+
         setPokemonsToRender([...listPokemons]);
     }
 
@@ -84,10 +84,11 @@ export const PokemonProvider: React.FC = ({ children }) => {
     function setFavorite(id: string): void {
         const listPokemons = pokemonsToRender;
 
-        listPokemons.map(pokemon => {
+        listPokemons.map((pokemon) => {
             if(pokemon.national_number === id) {
                 pokemon.favorite = !pokemon.favorite;
             }
+            return 0;
         });
 
         setPokemonsToRender([...listPokemons]);
@@ -99,6 +100,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
         pokemons.map((pokemon) => {
             types.push(...pokemon.type);
             pokemon.favorite = false;
+            return 0;
         });
 
         setTypes(Array.from(new Set(types)));
@@ -110,26 +112,26 @@ export const PokemonProvider: React.FC = ({ children }) => {
         );
     }
 
-    function configure(pokemons: Pokemon[]) {
-        const listPokemons = removeEvolution(pokemons);
-
-        defineTypes(listPokemons);
-        setPokemons(listPokemons);
-        setPokemonsToRender(listPokemons);
-    }
-
-    async function getPokemons(): Promise<void> {
-        try {
-            const response = await axios.get('https://unpkg.com/pokemons@1.1.0/pokemons.json');
-            const results: Pokemon[] = response.data.results;
-
-            configure(results);
-        } catch (error) {
-          alert(`Não foi possível carregar os pokemons. ${error}`);
-        }
-    }
-
     useEffect(() => {
+        function configure(pokemons: Pokemon[]) {
+            const listPokemons = removeEvolution(pokemons);
+    
+            defineTypes(listPokemons);
+            setPokemons(listPokemons);
+            setPokemonsToRender(listPokemons);
+        }
+        
+        async function getPokemons(): Promise<void> {
+            try {
+                const response = await axios.get('https://unpkg.com/pokemons@1.1.0/pokemons.json');
+                const results: Pokemon[] = response.data.results;
+    
+                configure(results);
+            } catch (error) {
+              alert(`Não foi possível carregar os pokemons. ${error}`);
+            }
+        }
+
         getPokemons();
     }, []);
 

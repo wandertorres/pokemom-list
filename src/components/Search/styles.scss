@@ -1,0 +1,75 @@
+@import "../../App.scss";
+
+.search-order {
+    max-width: 1300px;
+    margin: 3rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .search__container {
+        width: 100%;
+            
+        .search__input { 
+            border-radius: 18px;
+            background-color: var(--light-gray);
+            outline: none;
+            width: 60%;
+            border: 0;
+            padding: 10px 20px;
+        }
+    
+        svg {
+            margin-left: -2rem;
+            cursor: pointer;
+            color: var(--red);
+        }
+    
+        .search__clear {
+            border: 1px solid var(--red);
+            margin-left: 1.5rem;
+            padding: 8px 8px;
+            border-radius: 17px;
+            background-color: transparent;
+            color: var(--font);
+        
+            &:hover{
+                background-color: var(--red);
+                color: white;
+            }
+        }
+    
+        @media (max-width: 768px) {
+            margin: 0 auto;
+            text-align: center;
+            flex-direction: column;
+            margin-bottom: 2rem;
+        }
+    }
+
+    .order__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40%;
+
+        span {
+            color: var(--dark-gray);
+        }
+
+        select {
+            margin-left: 1rem;
+            padding: 8px 8px;
+            border-radius: 17px;
+            outline: none;
+            color: var(--red);
+            border: 1px solid var(--red);
+        }
+
+        @media (max-width: 768px) {
+            width: 100%;
+            margin: 0 auto;
+            flex-direction: column;
+        }
+    }
+}

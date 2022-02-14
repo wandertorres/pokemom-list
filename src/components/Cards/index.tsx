@@ -31,7 +31,7 @@ export const Cards = () => {
                         <h3>{pokemon.name}</h3>
                         <div className="card__type">
                             {pokemon.type.map((type, index) => (
-                                <span key = {index}>{type}</span>
+                                <span className = {type} key = {index}>{type}</span>
                             ))}
                         </div>
                     </div>

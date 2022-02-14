@@ -4,7 +4,42 @@
     box-sizing: border-box;
 }
 
-main{
+header {
+    background-color: var(--red);
+    padding: 30px 2%;
+    width: 100%;
+
+    .header__container {
+        width: 100%;
+        max-width: 1300px;
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .header__icon {
+            display: flex;
+            align-items: center;
+
+            h1 {
+                margin-left: 1rem;
+                font-size: 2.3rem;
+            }
+        }
+
+        .header__exit {
+            display: flex;
+            align-items: center;
+
+            img {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+main {
     display: flex;
     margin: 0 auto;
     max-width: 1300px;
@@ -17,8 +52,28 @@ main{
     }
 }
 
+body {
+    background: var(--white);
+}
+
+body, input, textarea, button{
+    font: 500 1rem Inter, sans-serif;
+}
+
+button, select {
+    cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    font-family: Lexend, sans-serif;
+    color: var(--white);
+}
+
 :root {
+    --font: 		#333333;
     --dark-gray:    #828282;
+    --light-gray:	#F2F2F2;
     --red:          #E23500;
     --white:        #FFFFFF;
 
@@ -112,4 +167,22 @@ main{
   
 .Dark {
     background-color: var(--dark);
+}
+
+@media(max-width: 1366px) { 
+    html { 
+        font-size: 80%; 
+    } 
+}
+  
+@media(max-width: 1080px){
+    html {
+        font-size: 93.75%;
+    }
+}
+  
+@media(max-width: 720){
+    html {
+        font-size: 87.5%;
+    }
 }
