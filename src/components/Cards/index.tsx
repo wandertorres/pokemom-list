@@ -51,7 +51,7 @@ export function Cards() {
                 </section>
             ) : 
                 <section>
-                    <h2 className="card__empty">Não há pokemons que correspondam à sua busca...</h2>
+                    <h3 className="card__empty">Não há pokemons que correspondam à sua busca...</h3>
                 </section>
             }
         </>
