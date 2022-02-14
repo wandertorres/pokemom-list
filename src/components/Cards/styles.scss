@@ -151,3 +151,8 @@
         height: 70vh;
     }
 }
+
+.card__empty {
+    color: var(--font);
+    overflow-wrap: normal;
+}
