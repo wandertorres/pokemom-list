@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Pokemon } from "../types/Pokemon";
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ interface PokemonInterface {
     types: string[];
     search: (input: string) => void;
     clearSearch: () => void;
-    filterBy: (type: string) => void
+    filter: (filter: {type: string, favorite: boolean}) => void;
     setFavorite: (id: string) => void;
 }
 
@@ -18,7 +18,7 @@ const defaultPokemonContext: PokemonInterface = {
     types: [],
     search: () => null,
     clearSearch: () => null,
-    filterBy: () => null,
+    filter: () => null,
     setFavorite: () => null,
 }
 
@@ -30,7 +30,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
     const [types, setTypes] = useState<string[]>([]);
 
     function search(input: string): void {
-        const listPokemons: Pokemon[] = pokemons.filter(pokemon => {
+        const listPokemons: Pokemon[] = pokemonsToRender.filter(pokemon => {
             return pokemon.name.toLowerCase().includes(input.toLowerCase()) ||
                 pokemon.national_number.toLowerCase().includes(input.toLowerCase());
         });
@@ -42,10 +42,15 @@ export const PokemonProvider: React.FC = ({ children }) => {
         setPokemonsToRender(pokemons);
     }
 
-    function filterBy(type: string) {
-        const listPokemons: Pokemon[] = pokemons.filter((pokemon) => 
-            pokemon.type.includes(type)
-        );
+    function filter(filter: {type: string, favorite: boolean}): void {
+        console.log(filter)
+        let listPokemons: Pokemon[] = pokemons;
+        
+        if(filter.favorite)
+            listPokemons = listPokemons.filter(pokemon => pokemon.favorite);
+        
+        if(filter.type !== "")
+            listPokemons = listPokemons.filter(pokemon => pokemon.type.includes(filter.type))
 
         setPokemonsToRender(listPokemons);
     }
@@ -62,32 +67,39 @@ export const PokemonProvider: React.FC = ({ children }) => {
         setPokemonsToRender([...listPokemons]);
     }
 
+    function defineTypes(pokemons: Pokemon[]): void{
+        let types: string[] = [];
+
+        pokemons.map((pokemon) => {
+            types.push(...pokemon.type);
+            pokemon.favorite = false;
+        });
+
+        setTypes(Array.from(new Set(types)));
+    }
+
     function removeEvolution(pokemons: Pokemon[]): Pokemon[] {
         return pokemons.filter((pokemon) =>
             pokemon.evolution === null
         );
     }
 
-    function setStates(pokemons: Pokemon[]) {
-        let types: string[] = [];
-        
-        pokemons.map((pokemon) => {
-            types.push(...pokemon.type)
-        });
+    function configure(pokemons: Pokemon[]) {
+        const listPokemons = removeEvolution(pokemons);
 
-        setPokemons(pokemons);
-        setPokemonsToRender(pokemons);
-        setTypes(Array.from(new Set(types)));
+        defineTypes(listPokemons);
+        setPokemons(listPokemons);
+        setPokemonsToRender(listPokemons);
     }
 
     async function getPokemons(): Promise<void> {
         try {
             const response = await axios.get('https://unpkg.com/pokemons@1.1.0/pokemons.json');
-            const listPokemons: Pokemon[] = removeEvolution(response.data.results);
+            const results: Pokemon[] = response.data.results;
 
-            setStates(listPokemons);
+            configure(results);
         } catch (error) {
-          console.log(`Erro ao buscar lista de pokemons (${error})`)
+          alert(`Não foi possível carregar os pokemons. ${error}`);
         }
     }
 
@@ -103,7 +115,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
                 types,
                 search,
                 clearSearch,
-                filterBy,
+                filter,
                 setFavorite
             }}
         >
