@@ -6,24 +6,39 @@ import { Pokemon } from "../../types/Pokemon";
 import "./styles.scss";
 
 export const Search = () => {
-    const {
-        pokemons,
-        pokemonsToRender,
-        order,
-        setPokemonsToRender,
-        clearSearch
-     } = useContext(PokemonContext);
-     const [searchValue, setSearchValue] = useState<string>("");
+    const {pokemons, pokemonsToRender, setPokemonsToRender} = useContext(PokemonContext);
+    const [searchValue, setSearchValue] = useState<string>("");
 
-     function searchByValue(): void {
-        if(searchValue === "") {
-            alert("Digite algo para pesquisar!");
-            return;
+     const order = (value: string): void => {
+        let listPokemons: Pokemon[] = [];
+
+        if(value === "1") {
+            listPokemons = pokemonsToRender.sort((a, b) => {
+                return a.name > b.name ? 1 : a.name < b.name ? -1 : 0;
+            });
+        } else if(value === "2") {
+            listPokemons = pokemonsToRender.sort((a, b) => {
+                return a.name < b.name ? 1 : a.name > b.name ? -1 : 0;
+            });
+        } else if(value === "3") {
+            listPokemons = pokemonsToRender.sort((a, b) => {
+                return a.national_number > b.national_number ? 1 : a.national_number < b.national_number ? -1 : 0;
+            });
+        } else {
+            listPokemons = pokemonsToRender.sort((a, b) => {
+                return a.national_number < b.national_number ? 1 : a.national_number > b.national_number ? -1 : 0;
+            });
         }
-        search(searchValue);
-     }
 
-     function search(input: string): void {
+        setPokemonsToRender([...listPokemons]);
+    }
+
+     const clearSearch = (): void => {
+        setPokemonsToRender(pokemons);
+        setSearchValue("");
+    }
+
+     const search = (input: string): void => {
         const listPokemons: Pokemon[] = pokemons.filter(pokemon => {
             return pokemon.name.toLowerCase().includes(input.toLowerCase()) ||
                 pokemon.national_number.toLowerCase().includes(input.toLowerCase());
@@ -31,6 +46,14 @@ export const Search = () => {
 
         setPokemonsToRender(listPokemons);
     }
+
+    const searchByValue = (): void => {
+        if(searchValue === "") {
+            alert("Digite algo para pesquisar!");
+            return;
+        }
+        search(searchValue);
+     }
 
     return(
         <section className = "search-order">
