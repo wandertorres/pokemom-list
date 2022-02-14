@@ -44,7 +44,7 @@
             margin: 0 auto;
             text-align: center;
             flex-direction: column;
-            margin-bottom: 2rem;
+            margin-bottom: 0.5rem;
         }
     }
 
@@ -81,7 +81,7 @@
 
     @media (max-width: 768px) {
         max-width: 1300px;
-        margin: 3rem auto;
+        margin: 0.5rem auto;
         display: flex;
         align-items: center;
         flex-direction: column;
